@@ -43,10 +43,19 @@ public class Tag {
         updateTagName();
     }
 
+    public void moveIndexLeft() {
+        String tagFirstPart = this.tagName.substring(this.tagName.indexOf(startTag),
+                this.tagName.lastIndexOf(endTag));
+        String withoutLastIndex = tagFirstPart.substring(0, tagFirstPart.lastIndexOf(indexDelimeter + index.toString()));
+        this.index = Integer.valueOf(withoutLastIndex.substring(withoutLastIndex.lastIndexOf(indexDelimeter) + indexDelimeter.length()));
+        this.tagName = withoutLastIndex + endTag;
+        updateTagName();
+    }
+
     public String getPureName() {
         String name = this.tagName.substring(this.tagName.indexOf(startTag) + startTag.length(), this.tagName.lastIndexOf(endTag));
         if (name.endsWith(index.toString())) {
-            name = name.substring(0, name.indexOf(indexDelimeter+index.toString()));
+            name = name.substring(0, name.indexOf(indexDelimeter + index.toString()));
         }
         return name;
     }

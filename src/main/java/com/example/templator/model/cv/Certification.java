@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -24,6 +25,10 @@ public class Certification implements ReplacableElement {
         attributeTagNameMap.put(name, "{{certificate_name_0}}");
         attributeTagNameMap.put(year, "{{certificate_year_0}}");
         return attributeTagNameMap;
+    }
+
+    public Map<List<String>, String> getAttributeTagsMap() {
+        return new HashMap<>();
     }
 
     @Override

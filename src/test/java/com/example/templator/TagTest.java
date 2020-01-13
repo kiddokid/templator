@@ -54,6 +54,20 @@ public class TagTest {
         assert tag.getTagName().equals("{{project_name_1_1_0}}");
     }
 
+    @Test
+    public void moveLeftIndexWorks() {
+        Tag tag = getBaseTag();
+        tag.increaseIndex();
+        tag.moveIndexRight();
+        tag.increaseIndex(); // {{project_name_1_1}}
+
+        tag.moveIndexLeft();
+
+        assert tag.getTagName().equals("{{project_name_1}}");
+        assert tag.getIndex() == 1;
+    }
+
+
     private Tag getBaseTag() {
         return new Tag("{{project_name_0}}",  null);
     }
