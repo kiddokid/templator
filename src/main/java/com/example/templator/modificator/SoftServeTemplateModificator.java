@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
+import static com.example.templator.modificator.ReplacableMapBuilder.buildReplaceMapFromList;
+
 @Slf4j
 @Component
 public class SoftServeTemplateModificator implements TemplateModificator<SoftServeCVDetails> {
@@ -198,35 +200,5 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
             replaceMap.put(value, key);
         });
         return replaceMap;
-    }
-
-
-    private Map<String, String> buildReplaceMapFromList(List<ReplacableElement> replacableElements) {
-        Map<String, Tag> tagRegistry = new HashMap<>();
-        Map<String, String> replaceMap = new HashMap<>();
-
-        replacableElements.forEach(replacableElement -> {
-            Map<String, String> attributeTagMap = replacableElement.getAttributeTagMap();
-            attributeTagMap.forEach((attribute, tagName) -> {
-                if (tagName != null && isTag(tagName)) {
-                    Tag foundTag;
-                    foundTag = tagRegistry.get(tagName);
-                    if (foundTag != null) {
-                        replaceMap.put(foundTag.getTagName(), attribute);
-                        foundTag.increaseIndex();
-                    } else {
-                        foundTag = new Tag(tagName, null);
-                        replaceMap.put(foundTag.getTagName(), attribute);
-                        foundTag.increaseIndex();
-                        tagRegistry.put(tagName, foundTag);
-                    }
-                }
-            });
-        });
-        return replaceMap;
-    }
-
-    private boolean isTag(String string) {
-        return string.startsWith("{{") && string.endsWith("}}");
     }
 }

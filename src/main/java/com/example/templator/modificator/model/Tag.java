@@ -5,6 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Slf4j
 @ToString(exclude = "index")
 public class Tag {
@@ -54,8 +57,14 @@ public class Tag {
 
     public String getPureName() {
         String name = this.tagName.substring(this.tagName.indexOf(startTag) + startTag.length(), this.tagName.lastIndexOf(endTag));
-        if (name.endsWith(index.toString())) {
-            name = name.substring(0, name.indexOf(indexDelimeter + index.toString()));
+        while (Character.isDigit(name.charAt(name.length()-1))) {
+            int position = 0;
+            Pattern p = Pattern.compile("[0-9]");  // insert your pattern here
+            Matcher m = p.matcher(name);
+            if (m.find()) {
+                position = m.start();
+            }
+            name = name.substring(0, position-indexDelimeter.length());
         }
         return name;
     }

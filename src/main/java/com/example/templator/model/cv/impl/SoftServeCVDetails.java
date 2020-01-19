@@ -5,11 +5,13 @@ import com.example.templator.model.base.ReplacableElement;
 import com.example.templator.model.cv.Certification;
 import com.example.templator.model.cv.WorkExperience;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SoftServeCVDetails extends BaseCVDetails {
 
 
