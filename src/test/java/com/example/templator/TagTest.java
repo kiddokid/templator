@@ -22,14 +22,14 @@ public class TagTest {
     public void pureNameWorks() {
         Tag tag = getBaseTag();
 
-        //System.out.println(tag.getPureName());
         assert tag.getPureName().equals("project_name");
 
         for (int i = 0; i < 15; i++) {
+            tag.moveIndexRight();
             tag.increaseIndex();
         }
 
-        assert tag.getIndex() == 15;
+        assert tag.getIndex() == 1;
 
         assert tag.getPureName().equals("project_name");
     }
@@ -37,6 +37,7 @@ public class TagTest {
     @Test
     public void moveIndexRightWorks() {
         Tag tag = getBaseTag();
+
         tag.increaseIndex();
 
         assert tag.getTagName().equals("{{project_name_1}}");
@@ -52,7 +53,25 @@ public class TagTest {
         tag.moveIndexRight();
 
         assert tag.getTagName().equals("{{project_name_1_1_0}}");
+
+        tag.moveIndexLeft();
+
+        assert tag.getTagName().equals("{{project_name_1_1}}");
     }
+
+    @Test
+    public void moveLeftIndexWorks() {
+        Tag tag = getBaseTag();
+        tag.increaseIndex();
+        tag.moveIndexRight();
+        tag.increaseIndex(); // {{project_name_1_1}}
+
+        tag.moveIndexLeft();
+
+        assert tag.getTagName().equals("{{project_name_1}}");
+        assert tag.getIndex() == 1;
+    }
+
 
     private Tag getBaseTag() {
         return new Tag("{{project_name_0}}",  null);

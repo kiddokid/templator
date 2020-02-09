@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -30,6 +31,10 @@ public class Education implements ReplacableElement {
         attributeTagMap.put(schoolDepartment, "{{school_department_0}}");
         attributeTagMap.put(graduatedYear, "{{school_grad_year_0}}");
         return attributeTagMap;
+    }
+
+    public Map<List<String>, String> getAttributeTagsMap() {
+        return new HashMap<>();
     }
 
     @Override

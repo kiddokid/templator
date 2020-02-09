@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
+import static com.example.templator.modificator.ReplacableMapBuilder.buildReplaceMapFromList;
+
 @Slf4j
 @Component
 public class SoftServeTemplateModificator implements TemplateModificator<SoftServeCVDetails> {
@@ -77,6 +79,7 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
                 .role("Senior Assambler dev")
                 .teamSize("5")
                 .toolsAndTech("Brand, assambler")
+                .projectResponsibilities(List.of("resp"))
                 .build();
 
 
@@ -88,6 +91,7 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
                 .role("Senior Cleaner")
                 .teamSize("210")
                 .toolsAndTech("Java, .Net, Web Services, SQL Server/OLAP/DTS/RS")
+                .projectResponsibilities(List.of("resp", "pesp"))
                 .build();
 
         WorkExperience workExperience3 = WorkExperience.builder()
@@ -98,6 +102,7 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
                 .role("Senior Assambler dev")
                 .teamSize("5")
                 .toolsAndTech("Brand, assambler")
+                .projectResponsibilities(List.of("resp"))
                 .build();
 
         List<WorkExperience> workExperienceList = List.of(workExperience1, workExperience2, workExperience3);
@@ -143,7 +148,9 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
                 } catch (IOException | XmlException e) {
                     e.printStackTrace();
                 }
+
             }
+
         });
 
         cv.getExtandableTableList().stream().filter(Objects::nonNull).forEach(list -> {
@@ -193,35 +200,5 @@ public class SoftServeTemplateModificator implements TemplateModificator<SoftSer
             replaceMap.put(value, key);
         });
         return replaceMap;
-    }
-
-
-    private Map<String, String> buildReplaceMapFromList(List<ReplacableElement> certifications) {
-        Map<String, Tag> tagRegistry = new HashMap<>();
-        Map<String, String> replaceMap = new HashMap<>();
-
-        certifications.forEach(cert -> {
-            Map<String, String> attributeTagMap = cert.getAttributeTagMap();
-            attributeTagMap.forEach((attribute, tagName) -> {
-                if (tagName != null && isTag(tagName)) {
-                    Tag foundTag;
-                    foundTag = tagRegistry.get(tagName);
-                    if (foundTag != null) {
-                        replaceMap.put(foundTag.getTagName(), attribute);
-                        foundTag.increaseIndex();
-                    } else {
-                        foundTag = new Tag(tagName, null);
-                        replaceMap.put(foundTag.getTagName(), attribute);
-                        foundTag.increaseIndex();
-                        tagRegistry.put(tagName, foundTag);
-                    }
-                }
-            });
-        });
-        return replaceMap;
-    }
-
-    private boolean isTag(String string) {
-        return string.startsWith("{{") && string.endsWith("}}");
     }
 }

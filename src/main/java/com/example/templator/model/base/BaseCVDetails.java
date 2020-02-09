@@ -36,6 +36,10 @@ public abstract class BaseCVDetails implements ReplacableElement {
         return null;
     }
 
+    public Map<List<String>, String> getAttributeTagsMap() {
+        return null;
+    }
+
     public abstract List<List<ReplacableElement>> getExtandabeParagraphList();
 
     public abstract List<List<ReplacableElement>> getExtandableTableList();

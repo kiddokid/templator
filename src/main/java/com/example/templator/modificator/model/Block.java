@@ -13,7 +13,7 @@ public class Block {
 
     private Tag headerTag;
     private Tag footerTag;
-    private List<Tag> extandableTags;
+    private List<Block> extandableBlocks;
     private Integer countOfRows;
     private Integer countOfCopies;
 }

@@ -42,7 +42,11 @@ public class WorkExperience implements ReplacableElement {
                 .headerTag(new Tag("Experience", null))
                 .footerTag(new Tag("{{end_of_project_exp}}", null))
                 .countOfRows(9)
-                .extandableTags(List.of(new Tag("{{project_responsibilities_0}}", null)))
+                .extandableBlocks(List.of(Block.builder()
+                        .headerTag(new Tag("{{project_responsibilities_0}}", null))
+                        .countOfRows(1)
+                        .countOfCopies(projectResponsibilities.size())
+                        .build()))
                 .build();
     }
 }
